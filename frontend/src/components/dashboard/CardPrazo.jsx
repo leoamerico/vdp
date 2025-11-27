@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { LineChart } from '@/components/charts/LineChart';
+import { LineChart, Line, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 
 export function CardPrazo({ prazo, status, diferenca, historyData }) {
@@ -31,8 +31,32 @@ export function CardPrazo({ prazo, status, diferenca, historyData }) {
             </div>
 
             <div className="mt-4 h-[80px] w-full">
-                {/* Mini chart version */}
-                <LineChart data={historyData} className="h-full" />
+                <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={historyData}>
+                        <Tooltip
+                            content={({ active, payload, label }) => {
+                                if (active && payload && payload.length) {
+                                    return (
+                                        <div className="bg-white p-2 rounded shadow border border-border text-xs">
+                                            <p className="font-medium">{payload[0].payload.name}</p>
+                                            <p className="text-muted-foreground">
+                                                {payload[0].value} dias
+                                            </p>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }}
+                        />
+                        <Line
+                            type="monotone"
+                            dataKey="value"
+                            stroke="hsl(var(--primary))"
+                            strokeWidth={2}
+                            dot={false}
+                        />
+                    </LineChart>
+                </ResponsiveContainer>
             </div>
         </Card>
     );

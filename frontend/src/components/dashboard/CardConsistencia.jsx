@@ -2,9 +2,13 @@ import React from 'react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { BarChart } from '@/components/charts/BarChart';
+import { useVDPStore } from '@/stores/vdpStore';
 import { Clock } from 'lucide-react';
 
 export function CardConsistencia({ horas, meta, diferenca, weeklyData }) {
+    const metaStore = useVDPStore(state => state.dados.metaHorasSemana);
+    // Use store value if available, otherwise fallback to prop
+    const metaValue = metaStore || meta;
     const isPositive = diferenca > 0;
 
     return (
@@ -14,7 +18,7 @@ export function CardConsistencia({ horas, meta, diferenca, weeklyData }) {
                     <p className="text-sm font-medium text-muted-foreground">Consistência Semanal</p>
                     <div className="mt-2 flex items-baseline gap-2">
                         <span className="text-4xl font-bold tracking-tight">{horas}h</span>
-                        <span className="text-sm text-muted-foreground">/ {meta}h meta</span>
+                        <span className="text-sm text-muted-foreground">/ {metaValue}h meta</span>
                     </div>
                 </div>
                 <div className="rounded-full bg-muted p-2">

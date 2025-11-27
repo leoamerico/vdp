@@ -7,7 +7,7 @@ export const useVDPStore = create((set, get) => ({
         diferenca: -108,
         status: 'Excelente',
         horasSemana: 12.0,
-        metaHoras: 15.0, // Added meta for consistency card
+        metaHorasSemana: 15.0, // Added meta for consistency card
         taxaAcerto: 82,
         skillsDominadas: 8,
         totalSkills: 12, // Added total for skills card
