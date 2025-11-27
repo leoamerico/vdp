@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- Meta Tags SEO -->
+  <meta name="description"
+    content="Sistema inteligente de acompanhamento de estudos para certificação PMP baseado em Prática Deliberada. Reduza seu tempo de aprovação de 6 meses para 2-3 meses." />
+  <meta name="keywords" content="PMP, certificação, estudo, prática deliberada, project management, PMI, tracker" />
+  <meta name="author" content="Leonardo Américo" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph (Facebook, LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="VDP - Visor Dinâmico de Progresso | PMP Tracker" />
+  <meta property="og:description"
+    content="Acelere sua aprovação no PMP com sistema inteligente de tracking e recomendações personalizadas." />
+  <meta property="og:image" content="https://vdp-pmp-tracker.netlify.app/og-image.jpg" />
+  <meta property="og:url" content="https://vdp-pmp-tracker.netlify.app" />
+  <meta property="og:site_name" content="VDP - PMP Tracker" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VDP - Visor Dinâmico de Progresso" />
+  <meta name="twitter:description" content="Sistema inteligente para acelerar sua certificação PMP" />
+  <meta name="twitter:image" content="https://vdp-pmp-tracker.netlify.app/twitter-image.jpg" />
+
+  <!-- PWA -->
+  <meta name="theme-color" content="#3B82F6" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="VDP Tracker" />
+
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://sheets.googleapis.com" />
+
+  <!-- Inter Font (Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Title -->
+  <title>VDP - Visor Dinâmico de Progresso | PMP Tracker</title>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', {
+      page_title: 'VDP - Dashboard',
+      page_path: window.location.pathname,
+      send_page_view: true
+    });
+  </script>
+
+  <!-- Inline Critical CSS (opcional - para FCP) -->
+  <style>
+    /* Critical CSS para First Contentful Paint */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #F8FAFC;
+      color: #1E293B;
+    }
+
+    #root {
+      min-height: 100vh;
+    }
+
+    /* Loading Skeleton */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #F8FAFC;
+    }
+
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #E2E8F0;
+      border-top-color: #3B82F6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      margin-top: 16px;
+      color: #64748B;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- App Root -->
+  <div id="root">
+    <!-- Loading Skeleton (mostrado até React carregar) -->
+    <div class="loading">
+      <div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando VDP...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vite Entry Point -->
+  <script type="module" src="/src/main.jsx"></script>
+
+  <!-- Fallback para navegadores sem JS -->
+  <noscript>
+    <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+        font-family: system-ui, sans-serif;
+      ">
+      <div>
+        <h1 style="color: #1E293B; margin-bottom: 16px;">
+          JavaScript Necessário
+        </h1>
+        <p style="color: #64748B; max-width: 500px;">
+          O VDP - Visor Dinâmico de Progresso requer JavaScript habilitado para funcionar.
+          Por favor, habilite JavaScript no seu navegador e recarregue a página.
+        </p>
+      </div>
+    </div>
+  </noscript>
+</body>
+
+</html>
