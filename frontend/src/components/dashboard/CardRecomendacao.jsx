@@ -21,7 +21,10 @@ export function CardRecomendacao({ recomendacao, onAction }) {
                 </p>
             </div>
 
-            <Button onClick={onAction} className="mt-6 w-full gap-2">
+            <Button
+                onClick={onAction}
+                className="mt-6 w-full gap-2 bg-primary hover:bg-blue-600 text-white shadow-sm hover:shadow-md transition-all duration-200"
+            >
                 Ver Questões Focadas
                 <ArrowRight className="h-4 w-4" />
             </Button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { BarChart } from '@/components/charts/BarChart';
+import { BarChart, Bar, Cell, ResponsiveContainer } from 'recharts';
 import { useVDPStore } from '@/stores/vdpStore';
 import { Clock } from 'lucide-react';
 
@@ -34,7 +34,23 @@ export function CardConsistencia({ horas, meta, diferenca, weeklyData }) {
             </div>
 
             <div className="mt-4 h-[100px] w-full">
-                <BarChart data={weeklyData} className="h-full" />
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={weeklyData}>
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                            {weeklyData.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={
+                                        entry.value >= 2 ? '#10B981' : // High (Green)
+                                            entry.value >= 1 ? '#3B82F6' : // Medium (Blue)
+                                                entry.value > 0 ? '#F59E0B' :  // Low (Yellow)
+                                                    '#EF4444'                      // Zero (Red)
+                                    }
+                                />
+                            ))}
+                        </Bar>
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         </Card>
     );

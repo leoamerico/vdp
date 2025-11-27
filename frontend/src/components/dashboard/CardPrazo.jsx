@@ -51,9 +51,10 @@ export function CardPrazo({ prazo, status, diferenca, historyData }) {
                         <Line
                             type="monotone"
                             dataKey="value"
-                            stroke="hsl(var(--primary))"
+                            stroke="#3B82F6"
                             strokeWidth={2}
-                            dot={false}
+                            dot={{ r: 4, fill: '#3B82F6', strokeWidth: 2, stroke: '#FFFFFF' }}
+                            activeDot={{ r: 6, fill: '#3B82F6' }}
                         />
                     </LineChart>
                 </ResponsiveContainer>
