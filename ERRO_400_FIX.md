@@ -4,10 +4,10 @@
 
 O erro **400 Bad Request** está acontecendo porque o **Spreadsheet ID no arquivo `.env` está incorreto**.
 
-### IDs Encontrados:
+### IDs Encontrados
 
-1. **ID no `.env.example`**: `1BACEivT584OONz2FxpOk5n_RyUkln_FBDtyoD37mF1s`
-2. **ID sendo usado pela aplicação**: `1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gjz3c`
+1. **ID no `.env.example`**: [SEU_SPREADSHEET_ID]
+2. **ID sendo usado pela aplicação**: [SEU_SPREADSHEET_ID]
 
 ---
 
@@ -22,8 +22,9 @@ https://docs.google.com/spreadsheets/d/[SEU_ID_AQUI]/edit
 ```
 
 **Exemplo:**
+
 ```
-https://docs.google.com/spreadsheets/d/1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gjz3c/edit
+https://docs.google.com/spreadsheets/d/[SEU_ID_AQUI]/edit
                                        ↑ Este é o ID ↑
 ```
 
@@ -33,8 +34,8 @@ https://docs.google.com/spreadsheets/d/1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gj
 2. Atualize a linha do `VITE_SPREADSHEET_ID` com o ID correto:
 
 ```env
-VITE_GOOGLE_API_KEY=AIzaSyDwn2FJfH_ldgGbjcFaMFnU5nf9Yk_8aio
-VITE_SPREADSHEET_ID=SEU_ID_CORRETO_AQUI
+VITE_GOOGLE_API_KEY=[SEU_API_KEY]
+VITE_SPREADSHEET_ID=[SEU_ID_CORRETO_AQUI]
 ```
 
 **⚠️ IMPORTANTE**: Substitua `SEU_ID_CORRETO_AQUI` pelo ID real da sua planilha!
@@ -91,8 +92,8 @@ A planilha está compartilhada publicamente?
 
 A API Key está ativa?
 
-1. Acesse: https://console.cloud.google.com/apis/credentials
-2. Verifique se a API Key `AIzaSyDwn2FJfH_ldgGbjcFaMFnU5nf9Yk_8aio` está ativa
+1. Acesse: <https://console.cloud.google.com/apis/credentials>
+2. Verifique se a API Key `[SEU_API_KEY]` está ativa
 3. Confirme que a **Google Sheets API v4** está habilitada
 
 ### 3. Arquivo `.env` no Lugar Certo

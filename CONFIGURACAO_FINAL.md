@@ -4,7 +4,7 @@
 
 Baseado na sua planilha:
 
-- **Spreadsheet ID**: `1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gjz3c`
+- **Spreadsheet ID**: [SEU_SPREADSHEET_ID]
 - **Permissões**: ✅ Compartilhada publicamente (Qualquer pessoa com o link)
 - **Servidor**: ✅ Rodando em `http://localhost:5173/`
 
@@ -19,8 +19,8 @@ Abra o arquivo: `d:\antigravity\vdp\frontend\.env`
 ### Passo 2: Cole este conteúdo
 
 ```env
-VITE_GOOGLE_API_KEY=AIzaSyDwn2FJfH_ldgGbjcFaMFnU5nf9Yk_8aio
-VITE_SPREADSHEET_ID=1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gjz3c
+VITE_GOOGLE_API_KEY=[SEU_API_KEY]
+VITE_SPREADSHEET_ID=[SEU_SPREADSHEET_ID]
 ```
 
 ### Passo 3: Salve o arquivo
@@ -33,6 +33,7 @@ No terminal onde está rodando `bun dev`:
 
 1. Pressione **Ctrl+C** para parar
 2. Execute novamente:
+
    ```bash
    bun dev
    ```
@@ -44,6 +45,7 @@ No terminal onde está rodando `bun dev`:
 Depois de reiniciar o servidor, acesse:
 
 ### Opção 1: Página de Teste Visual
+
 ```
 http://localhost:5173/teste-conexao.html
 ```
@@ -51,6 +53,7 @@ http://localhost:5173/teste-conexao.html
 Clique em **"🚀 Executar Testes"** e verifique se todas as seções mostram ✅.
 
 ### Opção 2: Dashboard Principal
+
 ```
 http://localhost:5173/
 ```
@@ -68,9 +71,10 @@ Get-Content "d:\antigravity\vdp\frontend\.env"
 ```
 
 Deve mostrar:
+
 ```
-VITE_GOOGLE_API_KEY=AIzaSyDwn2FJfH_ldgGbjcFaMFnU5nf9Yk_8aio
-VITE_SPREADSHEET_ID=1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gjz3c
+VITE_GOOGLE_API_KEY=[SEU_API_KEY]
+VITE_SPREADSHEET_ID=[SEU_SPREADSHEET_ID]
 ```
 
 ---
@@ -85,7 +89,7 @@ VITE_SPREADSHEET_ID=1JX3HqAyHGFbMgCGR95n90sSob8XcaAUxHJAAE-Gjz3c
 
 ---
 
-## 🎉 Pronto!
+## 🎉 Pronto
 
 Depois desses passos, o erro 400 vai desaparecer e você verá os dados reais da planilha no dashboard! 🚀
 

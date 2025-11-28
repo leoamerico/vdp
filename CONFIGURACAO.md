@@ -2,9 +2,10 @@
 
 ## 📊 Status da Sua Planilha
 
-Sua planilha já está **corretamente estruturada**! 
+Sua planilha já está **corretamente estruturada**!
 
-### Abas Encontradas:
+### Abas Encontradas
+
 - ✅ **Dashboard** - 7 linhas com dados
 - ✅ **Daily_Tracking** - 8 linhas com dados  
 - ✅ **Simulados** - 5 linhas com dados
@@ -19,8 +20,8 @@ Sua planilha já está **corretamente estruturada**!
 Crie o arquivo `d:\antigravity\vdp\frontend\.env` com o seguinte conteúdo:
 
 ```env
-VITE_GOOGLE_API_KEY=AIzaSyDwn2FJfH_ldgGbjcFaMFnU5nf9Yk_8aio
-VITE_SPREADSHEET_ID=1BACEivT584OONz2FxpOk5n_RyUkln_FBDtyoD37mF1s
+VITE_GOOGLE_API_KEY=[SEU_API_KEY]
+VITE_SPREADSHEET_ID=[SEU_SPREADSHEET_ID]
 ```
 
 > **⚠️ IMPORTANTE**: Verifique se o `SPREADSHEET_ID` acima é o ID correto da **sua** planilha. Se não for, substitua pelo ID correto.
@@ -37,7 +38,7 @@ VITE_SPREADSHEET_ID=1BACEivT584OONz2FxpOk5n_RyUkln_FBDtyoD37mF1s
 
 A API Key no `.env.example` é a mesma que você está usando? Se sim, verifique:
 
-1. Acesse: https://console.cloud.google.com/apis/credentials
+1. Acesse: <https://console.cloud.google.com/apis/credentials>
 2. Verifique se a API Key está ativa
 3. Confirme que a **Google Sheets API v4** está habilitada no projeto
 
@@ -56,6 +57,7 @@ bun dev
 ### 5️⃣ Testar a Conexão
 
 Acesse no navegador:
+
 ```
 http://localhost:5173/diagnostico.html
 ```
@@ -82,9 +84,10 @@ O código `api.js` já está configurado para buscar os dados corretamente:
 
 ## 🎯 Estrutura Esperada vs Encontrada
 
-### ✅ Tudo Está Correto!
+### ✅ Tudo Está Correto
 
 Suas abas já têm os nomes corretos que o código espera:
+
 - ✅ `Dashboard` (não `Painel` ou `Métricas`)
 - ✅ `Daily_Tracking` (não `Diário` ou `Tracking`)
 - ✅ `Simulados` (não `Exames` ou `Testes`)
@@ -97,14 +100,18 @@ Suas abas já têm os nomes corretos que o código espera:
 ## 🔍 Verificação dos Dados
 
 ### Dashboard (Aba 1)
+
 Certifique-se de que as células têm os valores corretos:
+
 - `B7`: Prazo Projetado (número, ex: 72)
 - `B8`: Prazo Anterior (número, ex: 180)
 - `B9`: Diferença (número, ex: -108)
 - `B10`: Status (texto, ex: "Excelente")
 
 ### Daily_Tracking (Aba 2)
+
 Estrutura esperada (primeira linha = cabeçalho):
+
 ```
 | Data       | Horas | Questões | Acertos | Taxa | Área      | Observações |
 |------------|-------|----------|---------|------|-----------|-------------|
@@ -112,7 +119,9 @@ Estrutura esperada (primeira linha = cabeçalho):
 ```
 
 ### Simulados (Aba 3)
+
 Estrutura esperada:
+
 ```
 | Data       | Tipo | Questões | Acertos | % | Status         |
 |------------|------|----------|---------|---|----------------|
@@ -120,7 +129,9 @@ Estrutura esperada:
 ```
 
 ### Skills_Progress (Aba 4)
+
 Estrutura esperada:
+
 ```
 | Skill      | Questões | Acertos | % | Status    |
 |------------|----------|---------|---|-----------|
@@ -132,16 +143,19 @@ Estrutura esperada:
 ## ❓ Troubleshooting
 
 ### Erro 403 (Forbidden)
+
 - Verifique se a planilha está compartilhada publicamente
 - Confirme se a API Key está correta
 - Verifique se a Google Sheets API está habilitada
 
 ### Dados não aparecem
+
 - Verifique se o arquivo `.env` está na pasta `frontend/`
 - Reinicie o servidor de desenvolvimento
 - Abra o Console do navegador (F12) e veja se há erros
 
 ### "Cannot read properties of undefined"
+
 - Verifique se as células no Google Sheets têm valores
 - Confirme que os nomes das abas estão exatamente como esperado
 
@@ -158,9 +172,10 @@ Depois de criar o arquivo `.env` e reiniciar o servidor:
 
 ---
 
-## 🎉 Sucesso!
+## 🎉 Sucesso
 
 Quando tudo estiver funcionando, você verá:
+
 - ⏱️ **Prazo Projetado** com o valor real da célula B7
 - 📊 **Gráficos** com dados reais do Daily_Tracking
 - 📈 **Simulados** com histórico real
