@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VDP - Teste de Conexão</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-section h2 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .info-value {
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .data-preview {
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .data-preview pre {
+            font-size: 0.85rem;
+            color: #333;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #28a745;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Teste de Conexão VDP</h1>
+        <p class="subtitle">Verificação da integração com Google Sheets</p>
+
+        <!-- Seção 1: Variáveis de Ambiente -->
+        <div class="test-section">
+            <h2>
+                1️⃣ Variáveis de Ambiente
+                <span class="status pending" id="env-status">Verificando...</span>
+            </h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">API Key:</span>
+                    <span class="info-value" id="api-key-display">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Spreadsheet ID:</span>
+                    <span class="info-value" id="spreadsheet-id-display">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção 2: Conexão com API -->
+        <div class="test-section">
+            <h2>
+                2️⃣ Conexão com Google Sheets API
+                <span class="status pending" id="api-status">Aguardando teste</span>
+            </h2>
+            <div id="api-result"></div>
+        </div>
+
+        <!-- Seção 3: Estrutura da Planilha -->
+        <div class="test-section">
+            <h2>
+                3️⃣ Estrutura da Planilha
+                <span class="status pending" id="structure-status">Aguardando teste</span>
+            </h2>
+            <div id="structure-result"></div>
+        </div>
+
+        <!-- Seção 4: Dados de Exemplo -->
+        <div class="test-section">
+            <h2>
+                4️⃣ Preview dos Dados
+                <span class="status pending" id="data-status">Aguardando teste</span>
+            </h2>
+            <div id="data-result"></div>
+        </div>
+
+        <button id="test-btn" onclick="runTests()">🚀 Executar Testes</button>
+    </div>
+
+    <script type="module">
+        const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+        const SPREADSHEET_ID = import.meta.env.VITE_SPREADSHEET_ID;
+
+        // Verificar variáveis de ambiente
+        function checkEnvVars() {
+            const apiKeyDisplay = document.getElementById('api-key-display');
+            const spreadsheetIdDisplay = document.getElementById('spreadsheet-id-display');
+            const envStatus = document.getElementById('env-status');
+
+            if (API_KEY && SPREADSHEET_ID) {
+                apiKeyDisplay.textContent = API_KEY.substring(0, 10) + '...' + API_KEY.substring(API_KEY.length - 4);
+                spreadsheetIdDisplay.textContent = SPREADSHEET_ID.substring(0, 15) + '...';
+                envStatus.textContent = '✅ Configurado';
+                envStatus.className = 'status success';
+                return true;
+            } else {
+                apiKeyDisplay.textContent = API_KEY ? '✅ OK' : '❌ Não encontrada';
+                spreadsheetIdDisplay.textContent = SPREADSHEET_ID ? '✅ OK' : '❌ Não encontrado';
+                envStatus.textContent = '❌ Incompleto';
+                envStatus.className = 'status error';
+                return false;
+            }
+        }
+
+        // Testar conexão com API
+        async function testAPIConnection() {
+            const apiStatus = document.getElementById('api-status');
+            const apiResult = document.getElementById('api-result');
+            
+            apiStatus.innerHTML = 'Testando... <div class="loader"></div>';
+            apiStatus.className = 'status pending';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}?key=${API_KEY}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    apiStatus.textContent = '✅ Conectado';
+                    apiStatus.className = 'status success';
+                    apiResult.innerHTML = `
+                        <div class="success-message">
+                            <strong>✅ Conexão bem-sucedida!</strong><br>
+                            Planilha: ${data.properties.title}<br>
+                            Locale: ${data.properties.locale}
+                        </div>
+                    `;
+                    return data;
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.error.message);
+                }
+            } catch (error) {
+                apiStatus.textContent = '❌ Erro';
+                apiStatus.className = 'status error';
+                apiResult.innerHTML = `
+                    <div class="error-message">
+                        <strong>❌ Erro na conexão:</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                return null;
+            }
+        }
+
+        // Verificar estrutura da planilha
+        async function checkStructure() {
+            const structureStatus = document.getElementById('structure-status');
+            const structureResult = document.getElementById('structure-result');
+            
+            structureStatus.innerHTML = 'Verificando... <div class="loader"></div>';
+            structureStatus.className = 'status pending';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}?key=${API_KEY}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const sheets = data.sheets.map(s => s.properties.title);
+                    const expectedSheets = ['Dashboard', 'Daily_Tracking', 'Simulados', 'Skills_Progress'];
+                    const allPresent = expectedSheets.every(s => sheets.includes(s));
+
+                    structureStatus.textContent = allPresent ? '✅ Completa' : '⚠️ Incompleta';
+                    structureStatus.className = allPresent ? 'status success' : 'status error';
+
+                    let html = '<div class="info-grid">';
+                    expectedSheets.forEach(sheetName => {
+                        const exists = sheets.includes(sheetName);
+                        html += `
+                            <div class="info-item">
+                                <span class="info-label">${sheetName}</span>
+                                <span class="info-value">${exists ? '✅ Encontrada' : '❌ Não encontrada'}</span>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    structureResult.innerHTML = html;
+
+                    return allPresent;
+                } else {
+                    throw new Error('Erro ao verificar estrutura');
+                }
+            } catch (error) {
+                structureStatus.textContent = '❌ Erro';
+                structureStatus.className = 'status error';
+                structureResult.innerHTML = `<div class="error-message">${error.message}</div>`;
+                return false;
+            }
+        }
+
+        // Buscar dados de exemplo
+        async function fetchSampleData() {
+            const dataStatus = document.getElementById('data-status');
+            const dataResult = document.getElementById('data-result');
+            
+            dataStatus.innerHTML = 'Buscando... <div class="loader"></div>';
+            dataStatus.className = 'status pending';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Dashboard!A1:C10?key=${API_KEY}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    dataStatus.textContent = '✅ Dados encontrados';
+                    dataStatus.className = 'status success';
+
+                    let html = '<div class="data-preview"><pre>';
+                    if (data.values && data.values.length > 0) {
+                        data.values.forEach(row => {
+                            html += row.join(' | ') + '\n';
+                        });
+                    } else {
+                        html += 'Nenhum dado encontrado';
+                    }
+                    html += '</pre></div>';
+                    dataResult.innerHTML = html;
+                } else {
+                    throw new Error('Erro ao buscar dados');
+                }
+            } catch (error) {
+                dataStatus.textContent = '❌ Erro';
+                dataStatus.className = 'status error';
+                dataResult.innerHTML = `<div class="error-message">${error.message}</div>`;
+            }
+        }
+
+        // Executar todos os testes
+        window.runTests = async function() {
+            const btn = document.getElementById('test-btn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Executando testes...';
+
+            const envOk = checkEnvVars();
+            
+            if (envOk) {
+                await testAPIConnection();
+                await checkStructure();
+                await fetchSampleData();
+            }
+
+            btn.disabled = false;
+            btn.textContent = '🔄 Executar Novamente';
+        };
+
+        // Executar verificação inicial
+        checkEnvVars();
+    </script>
+</body>
+</html>

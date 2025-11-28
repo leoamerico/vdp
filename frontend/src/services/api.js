@@ -21,36 +21,35 @@ async function fetchSheet(range) {
 // Buscar dados do Dashboard
 export async function buscarDadosDashboard() {
     try {
-        // Buscar múltiplas ranges de uma vez
-        const response = await axios.get(
-            `${BASE_URL}/${SPREADSHEET_ID}/values:batchGet`,
-            {
-                params: {
-                    key: API_KEY,
-                    ranges: [
-                        'Dashboard!B7',      // Prazo Projetado
-                        'Dashboard!B8',      // Prazo Anterior
-                        'Dashboard!B9',      // Diferença
-                        'Dashboard!B10',     // Status
-                        'Daily_Tracking!B:G', // Últimos 7 dias
-                        'Simulados!A2:F20',  // Histórico simulados
-                        'Skills_Progress!A2:E13', // 12 Skills
-                    ]
-                }
-            }
-        );
+        // Definir ranges
+        const ranges = [
+            'Dashboard!B3',           // Prazo Projetado (linha 3)
+            'Dashboard!B4',           // Prazo Anterior (linha 4)
+            'Dashboard!B5',           // Diferença (linha 5)
+            'Dashboard!B6',           // Status (linha 6)
+            'Daily_Tracking!B:G',     // Últimos 7 dias
+            'Simulados!A2:E20',       // Skills (Simulados tab tem dados de Skills)
+            'Skills_Progress!A2:F20', // Simulados (vazio por enquanto)
+        ];
 
-        const ranges = response.data.valueRanges;
+        // Construir URL manualmente para evitar problemas com serialização de arrays
+        const rangesParam = ranges.map(r => `ranges=${encodeURIComponent(r)}`).join('&');
+        const url = `${BASE_URL}/${SPREADSHEET_ID}/values:batchGet?key=${API_KEY}&${rangesParam}`;
+
+        // Buscar múltiplas ranges de uma vez
+        const response = await axios.get(url);
+
+        const valueRanges = response.data.valueRanges;
 
         // Parse dos dados
         return {
-            prazoProjetado: parseInt(ranges[0].values?.[0]?.[0] || 180),
-            prazoAnterior: parseInt(ranges[1].values?.[0]?.[0] || 180),
-            diferenca: parseInt(ranges[2].values?.[0]?.[0] || 0),
-            status: ranges[3].values?.[0]?.[0] || 'Em progresso',
-            dailyTracking: ranges[4].values || [],
-            simulados: ranges[5].values || [],
-            skills: ranges[6].values || [],
+            prazoProjetado: parseInt(valueRanges[0].values?.[0]?.[0] || 180),
+            prazoAnterior: parseInt(valueRanges[1].values?.[0]?.[0] || 180),
+            diferenca: parseInt(valueRanges[2].values?.[0]?.[0] || 0),
+            status: valueRanges[3].values?.[0]?.[0] || 'Em progresso',
+            dailyTracking: valueRanges[4].values || [],
+            skills: valueRanges[5].values || [],        // Skills vem de Simulados
+            simulados: valueRanges[6].values || [],     // Simulados vem de Skills_Progress (vazio)
         };
     } catch (error) {
         console.error('Erro ao buscar dashboard:', error);

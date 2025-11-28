@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
+import { DebugEnv } from '@/components/DebugEnv';
 
 // Lazy load pages
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
@@ -20,6 +21,7 @@ function App() {
             <Route path="/config" element={<Configuracoes />} />
           </Routes>
         </Suspense>
+        <DebugEnv />
       </Layout>
     </Router>
   );

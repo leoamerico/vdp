@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico API - VDP</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #3b82f6;
+            margin-top: 0;
+        }
+
+        #output {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 400px;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        button:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+        }
+
+        .success {
+            color: #10b981;
+        }
+
+        .error {
+            color: #ef4444;
+        }
+
+        .warning {
+            color: #f59e0b;
+        }
+
+        .info {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Diagnóstico - Google Sheets API</h1>
+        <button id="runBtn" onclick="runDiagnostic()">▶️ Diagnóstico Completo</button>
+        <button id="structBtn" onclick="discoverStructure()" style="background: #10b981;">🔎 Descobrir
+            Estrutura</button>
+        <div id="output">Clique em um dos botões acima...</div>
+    </div>
+
+    <script type="module">
+        import runTests from './src/diagnostico-api.js';
+        import discoverStructure from './src/descobrir-estrutura.js';
+
+        function setupConsoleCapture(output, btn, originalText) {
+            const originalLog = console.log;
+            const originalError = console.error;
+
+            console.log = function (...args) {
+                const msg = args.join(' ');
+                let className = '';
+                if (msg.includes('✅') || msg.includes('SUCESSO')) className = 'success';
+                else if (msg.includes('❌') || msg.includes('ERRO')) className = 'error';
+                else if (msg.includes('⚠️')) className = 'warning';
+                else if (msg.includes('🔍') || msg.includes('📋')) className = 'info';
+                output.innerHTML += `<div class="${className}">${msg}</div>`;
+                originalLog.apply(console, args);
+            };
+
+            console.error = function (...args) {
+                const msg = args.join(' ');
+                output.innerHTML += `<div class="error">${msg}</div>`;
+                originalError.apply(console, args);
+            };
+
+            return { originalLog, originalError };
+        }
+
+        window.runDiagnostic = async function () {
+            const output = document.getElementById('output');
+            const btn = document.getElementById('runBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Executando...';
+            output.innerHTML = '';
+
+            const { originalLog, originalError } = setupConsoleCapture(output, btn, '▶️ Diagnóstico Completo');
+
+            try {
+                await runTests();
+            } catch (error) {
+                output.innerHTML += `<div class="error">Erro fatal: ${error.message}</div>`;
+            }
+
+            console.log = originalLog;
+            console.error = originalError;
+            btn.disabled = false;
+            btn.textContent = '🔄 Executar Novamente';
+        };
+
+        window.discoverStructure = async function () {
+            const output = document.getElementById('output');
+            const btn = document.getElementById('structBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Descobrindo...';
+            output.innerHTML = '';
+
+            const { originalLog, originalError } = setupConsoleCapture(output, btn, '🔎 Descobrir Estrutura');
+
+            try {
+                await discoverStructure();
+            } catch (error) {
+                output.innerHTML += `<div class="error">Erro fatal: ${error.message}</div>`;
+            }
+
+            console.log = originalLog;
+            console.error = originalError;
+            btn.disabled = false;
+            btn.textContent = '🔄 Descobrir Novamente';
+        };
+    </script>
+</body>
+
+</html>
